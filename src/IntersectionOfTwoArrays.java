@@ -1,12 +1,13 @@
-import java.util.HashMap;
-import java.util.Stack;
+import java.util.Arrays;
+/*import java.util.HashMap;
+import java.util.Stack;*/
 
 /**
  * <h1>Leet Code: Top Interview Questions - Easy</h1>
  * <h2>Section: Arrays</h2>
  * <h3>Challenge: Intersection of Two Arrays II</h3>
  *
- * <h4>Runtime: 6ms - beats 20% of Java submissions</h4>
+ * <h4>Runtime: 2ms - beats 90% of Java submissions</h4>
  *
  * @author Aiyush Jain
  * @version 1.0
@@ -20,7 +21,24 @@ public class IntersectionOfTwoArrays {
      * @return int[] elements making up the intersection
      * */
     public int[] intersect(int[] nums1, int[] nums2) {
-        if (nums1.length == 0) {
+        int i = 0, j = 0, k = 0;
+        Arrays.sort(nums1);
+        Arrays.sort(nums2);
+
+        while (i < nums1.length && j < nums2.length) {
+            if (nums1[i] > nums2[j]) {
+                j++;
+            } else if (nums1[i] < nums2[j]) {
+                i++;
+            } else {
+                nums1[k] = nums1[i];
+                i++;
+                j++;
+                k++;
+            }
+        }
+        return Arrays.copyOfRange(nums1, 0, k);
+        /*if (nums1.length == 0) {
             return nums1;
         } else if (nums2.length == 0) {
             return nums2;
@@ -42,6 +60,6 @@ public class IntersectionOfTwoArrays {
                 }
             }
         }
-        return result.stream().mapToInt(i -> i).toArray();
+        return result.stream().mapToInt(i -> i).toArray();*/
     }
 }
