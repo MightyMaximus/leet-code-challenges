@@ -5,10 +5,10 @@
  * <h2>Section: Arrays</h2>
  * <h3>Challenge: Single Number</h3>
  *
- * <h4>Runtime: 3ms - beats 50% of Java submissions (Old Solution)</h4>
+ * <h4>Runtime: 0ms - beats 100% of Java submissions</h4>
  *
  * @author Aiyush Jain
- * @version 1.0
+ * @version 2.0
  * @since 2020-01-18
  * */
 public class SingleNumber {
