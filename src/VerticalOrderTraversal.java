@@ -2,82 +2,59 @@ import java.util.*;
 
 /**
  * <h1>Leet Code: August LeetCoding Challenge</h1>
- * <h3>Challenge: Add and Search Word (Data Structure Design)</h3>
+ * <h3>Challenge: Vertical Order Traversal of a Binary Tree</h3>
  *
- * <h4>Runtime: 5ms - beats 40% of Java submissions</h4>
+ * <h4>Runtime: 2ms - beats 99% of Java submissions</h4>
  *
  * @author Aiyush Jain
- * @version 1.0
- * @since 2020-08-07
+ * @version 2.0
+ * @since 2020-08-09
  * */
 public class VerticalOrderTraversal {
+    private HashMap<Integer, List<List<Integer>>> table;
+    private int max = 0, min = 0;
 
-    public static List<List<Integer>> verticalTraversal(TreeNode root) {
-        if (root == null)
-            return new ArrayList<>();
+    public List<List<Integer>> verticalTraversal(TreeNode root) {
+        List<List<Integer>> list = new ArrayList<>();
+        if (root != null) {
+            table = new HashMap<>();
+            postOrder(root, 0, 0);
 
-        TreeTable table = new TreeTable();
-        preOrder(root, 0, 0, table);
-        List<List<Integer>> result = new ArrayList<>();
-
-        for (int key : table.getKeys()) {
-            List<Integer> row = new ArrayList<>();
-            for (Point p : table.getVal(key)) {
-                row.add(p.val);
+            for (int i = min; i <= max; i++) {
+                List<Integer> row = new ArrayList<>();
+                for (List<Integer> l : table.get(i)) {
+                    row.addAll(l);
+                }
+                list.add(row);
             }
-            result.add(row);
         }
-        return result;
+        return list;
     }
 
-    private static void preOrder(TreeNode node, int x, int y, TreeTable table) {
+    private void postOrder(TreeNode node, int x, int y) {
         if (node == null)
             return;
-        preOrder(node.left,x - 1, y -1, table);
-        preOrder(node.right,x + 1, y - 1, table);
-        table.addKey(x);
-        table.addVal(new Point(x, y, node.val));
-    }
-}
-
-class Point {
-    int x;
-    int y;
-    int val;
-
-    public Point(int x, int y, int val) {
-        this.x = x;
-        this.y = y;
-        this.val = val;
-    }
-}
-
-class TreeTable {
-    private TreeMap<Integer, List<Point>> table;
-
-    public TreeTable() {
-        table = new TreeMap<>();
+        postOrder(node.left,x - 1, y + 1);
+        postOrder(node.right,x + 1, y + 1);
+        addPoint(x, y, node.val);
     }
 
-    public void addKey(int x) {
+    public void addPoint(int x, int y, int val) {
         if (!table.containsKey(x)) {
+            max = Math.max(max, x);
+            min = Math.min(min, x);
             table.put(x, new ArrayList<>());
         }
-    }
-
-    public void addVal(Point point) {
-        List<Point> row = table.get(point.x);
-        row.add(point);
-        row.sort((p1, p2) -> p1.y == p2.y ? p1.val - p2.val : p2.y - p1.y);
-        table.put(point.x, row);
-    }
-
-    public Set<Integer> getKeys() {
-        return table.keySet();
-    }
-
-    public List<Point> getVal(int x) {
-        return table.get(x);
+        List<List<Integer>> col = table.get(x); // list of all Ys
+        int size = col.size();
+        if (y >= size) {
+            for (int i = size; i <= y; i++)
+                col.add(new ArrayList<>()); // add row per Y
+            col.get(y).add(val);
+        } else {
+            col.get(y).add(val);
+            Collections.sort(col.get(y));
+        }
     }
 }
 
