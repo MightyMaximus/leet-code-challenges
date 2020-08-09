@@ -5,7 +5,7 @@
  * <h4>Runtime: 6ms - beats 100% of Java submissions</h4>
  *
  * @author Aiyush Jain
- * @version 1.0
+ * @version 2.0
  * @since 2020-08-08
  * */
 public class PalindromeNumber {
@@ -20,17 +20,16 @@ public class PalindromeNumber {
         /*if (x < 10)
             return x >= 0;
 
-        int i = 0;
-        int pow = 1;
-        int place = (int) Math.floor(Math.log10(x));
-        while (i < place) {
-            int first = (x / (int) Math.pow(10, place)) % 10;;
-            int last = (x % (pow * 10)) / pow;
+        int digits = (int) Math.log10(x);
+        int pow = (int) Math.pow(10, digits);
+        digits = (digits + 1) / 2;
+        for (int i = 0; i < digits; i++) {
+            int first = (x / pow) % 10;
+            int last = x % 10;
             if (first != last)
                 return false;
-            pow *= 10;
-            place--;
-            i++;
+            x /= 10;
+            pow /= 100;
         }
         return true;*/
     }
