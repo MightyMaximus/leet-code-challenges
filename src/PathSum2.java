@@ -8,18 +8,18 @@ import java.util.List;
  * <h4>Runtime: 1ms - beats 99% of Java submissions</h4>
  *
  * @author Aiyush Jain
- * @version 1.0
+ * @version 2.0
  * @since 2020-08-08
  * */
 public class PathSum2 {
-    public List<List<Integer>> pathSum(TreeNode root, int sum) {
-        List<List<Integer>> list = new ArrayList<>();
-        getPaths(root, sum, list, new ArrayList<>());
+    List<List<Integer>> list = new ArrayList<>();
 
+    public List<List<Integer>> pathSum(TreeNode root, int sum) {
+        getPaths(root, sum, new ArrayList<>());
         return list;
     }
 
-    private void getPaths(TreeNode root, int sum, List<List<Integer>> list, List<Integer> track) {
+    private void getPaths(TreeNode root, int sum, List<Integer> track) {
         if (root == null)
             return;
 
@@ -32,9 +32,9 @@ public class PathSum2 {
         }
 
         if (root.left != null)
-            getPaths(root.left, sum - root.val, list, track);
+            getPaths(root.left, sum - root.val, track);
         if (root.right != null)
-            getPaths(root.right, sum - root.val, list, track);
+            getPaths(root.right, sum - root.val, track);
 
         track.remove(track.size() - 1);
     }
